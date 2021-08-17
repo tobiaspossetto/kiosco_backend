@@ -71,14 +71,17 @@ UserController.newUser = async (req, res) => {
             division:''
 
         }
-        //si me esta diciendo que no es alumno pero le metiste un curso o division
         console.log(student)
         console.log(year)
         console.log(division)
-        if(student === 0 & year !== 0 || student === 0 & division != '') {
-            return res.status(400).json({ message: 'if not is a student not can be year or division' })
+        //si me esta diciendo que no es alumno pero le metiste un curso o division
+        if(student == 0) {
+            if( year != 0 ||  division != ''){
+
+                return res.status(400).json({ message: 'if not is a student not can be year or division' })
+            }
             
-        }else if(student == 1 & year<8 & year>0 & division != '' ){
+        }else if( year<8 & year>0 & division != '' ){
             //si es estudiante y year esta entre 1-7 y division no esta vacia
             
                 newUser.year = year,
@@ -239,10 +242,20 @@ UserController.myProfile = async (req, res) => {
    const {id} = req.params
    const { userId } = res.locals.jwtPayload;
     if(id == userId){
-        let rows = await pool.query('SELECT username,email,proaTokens from users WHERE id = ?',[id])
-   if(rows.length > 0){
-        const userData = {...rows[0]}
-        res.status(200).json(userData)
+        let userDataQuery = await pool.query('SELECT username,email,proaTokens from users WHERE id = ?',[id])
+        
+   if(userDataQuery.length > 0){
+       const userData = {...userDataQuery[0]}
+       let transactionsData = await pool.query('SELECT username, proaTokens,transactionTotal, createdAt FROM transactions WHERE userId = ?',[id])
+       const transactionHistory = []
+       transactionsData.forEach(i => {
+          let  cont = 0
+           transactionHistory.push(i)
+           cont++
+       }) 
+       console.log("-------------")
+       console.log(transactionHistory)
+       res.status(200).json(userData)
    }else{
     res.status(404).json({message:'Something goes wrong!'})
    }
