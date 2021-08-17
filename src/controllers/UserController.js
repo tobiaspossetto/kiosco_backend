@@ -58,16 +58,39 @@ UserController.newUser = async (req, res) => {
     } else {
         //se crea el usuario 
 
-        const { username, password, admin, email, proaTokens } = req.body;
+        const { username, password, admin, email, proaTokens, student, year, division } = req.body;
         let passwordEncrypted = hashPassword(password)
         const newUser = {
             username,
             password: passwordEncrypted,
             admin,
             email,
-            proaTokens
+            proaTokens,
+            student,
+            year:0,
+            division:''
 
         }
+        //si me esta diciendo que no es alumno pero le metiste un curso o division
+        console.log(student)
+        console.log(year)
+        console.log(division)
+        if(student === 0 & year !== 0 || student === 0 & division != '') {
+            return res.status(400).json({ message: 'if not is a student not can be year or division' })
+            
+        }else if(student == 1 & year<8 & year>0 & division != '' ){
+            //si es estudiante y year esta entre 1-7 y division no esta vacia
+            
+                newUser.year = year,
+                newUser.division = division
+            
+            
+                
+            
+        }else{
+            return res.status(400).json({ message: 'if  is a student  can be year and division valid' })
+        }
+       
         //Valida con la db que el usuario o correo no exista
         try {
             

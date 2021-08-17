@@ -30,6 +30,9 @@ router.route('/')
         body("proaTokens", "proaTokens value are required, is numeric")
             .exists()
             .isNumeric(),
+            body("student", "student value are required, is numeric")
+            .exists()
+            .isNumeric(),
 
         newUser)
 
