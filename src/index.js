@@ -10,6 +10,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.json());
 
 // Routes
+
   app.use('/users', require('./routes/user'))
   app.use('/login',require('./routes/auth'))
 // Starting the server

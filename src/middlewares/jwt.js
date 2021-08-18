@@ -11,14 +11,15 @@ Jwt.checkJwt = (req, res, next) => {
     const bearerHeader = req.headers['authorization'];
     let jwtPayload;
 
+    //Si la cabecera no es undefined
     if (typeof bearerHeader !== 'undefined') {
-        // const bearerToken = bearerHeader.split(' ')[1];
 
 
+        //Se verifica ese token con la funcion verify, para saber si coincide con el token de la sesión
         jwt.verify(bearerHeader, process.env.SECRET_JWT, (err, authData) => {
             if (err) {
 
-                return res.status(403), res.json({ error: 'unauthorized' });
+                return res.status(401).json({ error: 'unauthorized' });
 
 
             } else {
@@ -30,8 +31,8 @@ Jwt.checkJwt = (req, res, next) => {
 
     } else {
 
-        console.log('es undefined')
-        return res.status(403), res.json({ error: 'unauthorized' });
+        
+        return res.status(401).json({ error: 'unauthorized' });
 
     }
 

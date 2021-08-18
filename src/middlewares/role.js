@@ -11,11 +11,11 @@ Role.checkRole = async (req, res, next) => {
         if (rows[0].admin === 1) {
             next()
         } else {
-            return res.status(403), res.send('unauthorized')
+            return res.status(401).send('unauthorized')
         }
     } catch (error) {
         console.error(error)
-        return res.status(404), res.send('error to conect to database')
+        return res.status(401).send('error to conect to database')
     }
 
 
