@@ -28,7 +28,7 @@
    * Tanto administradores como clientes tienen que iniciar sesión
    * Cambiar la contraseña es lo primero que se debe hacer al obtener una cuenta
    * Los administradores tambien pueden hacer transferencias al kiosco
-   * INICIAR SESIÓN -> login/ POST  body -> username : string, password : string Se devuelve un token que se guarda en la cabecera para acceder a rutas protegidas bajo el nombre de 'auth', guardarlo en localStorage , dura 2hs y se tiene que renovar pasado ese tiempo.
+   * INICIAR SESIÓN -> login/ POST  body -> username : string, password : string Se devuelve un token que se guarda en la cabecera para acceder a rutas protegidas bajo el nombre de 'auth', guardarlo en una Cookie , dura 2hs y se tiene que renovar pasado ese tiempo.
    * CAMBIAR CONTRASEÑA -> login/change-password POST  body -> oldPassword : string, newPassword : string, confirmNewPassword : string
    * INFORMACIÓN DE USUARIO -> login/profile GET 
    * TRANSACCIÓN AL KIOSCO -> users/transaction POST  body -> quantity : int, quantityConfirm : int
